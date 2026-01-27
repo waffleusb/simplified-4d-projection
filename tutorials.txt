@@ -1,0 +1,9 @@
+GENERAL USE
+http://threejs.org/manual/#en/installation
+
+INSTALLING NODE.JS
+https://nodejs.org/en/download
+
+INSTALLING THREE.JS
+https://www.tutorialspoint.com/threejs/threejs_installation.htm
+
