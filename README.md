@@ -3,7 +3,7 @@ an express server and client for experimenting with 4d projection in three js
 
 server setup
 ====================
-general 3js use
+general three.js use
 http://threejs.org/manual/#en/installation
 
 installing node.js
