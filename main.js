@@ -53,11 +53,14 @@ console.log(hypercube_edges);
 var fourObs = [];
 
 class fourOb {
-  constructor(name, verts, edges) {
+  constructor(name, verts, edges, firstVerts) {
     this.rotationAnimation = this.rotationAnimation.bind(this)
     this.name = name;
     this.verts = verts;
     this.edges = edges;
+
+    this.firstVerts = firstVerts;
+    console.log(firstVerts);
 
     //transformed version
     
@@ -66,15 +69,19 @@ class fourOb {
   }
    rotationAnimation(t, a, b, c, d, s) {
     var verts2 = [];
+    var firstVerts2 = this.firstVerts;
    (this.verts).forEach(function(curElementB, indexB) {
-    var x = s*(Math.cos((a*t)+b))+(Math.sin((a*t)+b));
-    var y = s*((-1)*(Math.sin((a*t)+b)))+(Math.cos((a*t)+b));
-    var z = s*Math.cos(((c*t)+d))+Math.sin(((c*t)+d));
-    var w = s*((-1)*Math.cos(((c*t)+d)))+Math.sin(((c*t)+d));
-   // var x = 1*t;
-    //var y = 1*t;
-    //var z = 1*t;
-   // var w = 1;
+    var curFirstElementB = firstVerts2[indexB];
+    //var x = 20+s*((Math.cos((a*t)+b))+(Math.sin((a*t)+b)));
+    //var y = 20+s*(((-1)*(Math.sin((a*t)+b)))+(Math.cos((a*t)+b)));
+    //var z = 20+s*(Math.cos(((c*t)+d))+Math.sin(((c*t)+d)));
+    //var w = 20+s*(((-1)*Math.cos(((c*t)+d)))+Math.sin(((c*t)+d)));
+
+    var x = s*curFirstElementB[0]+(curFirstElementB[0]*Math.sin(t+a));
+    var y = s*curFirstElementB[1]+(curFirstElementB[1]*Math.sin(t+b));
+    var z = s*curFirstElementB[3]+(curFirstElementB[2]*Math.sin(t+c));
+    var w = (s*curFirstElementB[3]+(curFirstElementB[3]*Math.sin(t+d)));
+    
     
   
     verts2.push([x,y,z,w]);
@@ -84,7 +91,7 @@ class fourOb {
 }
 
 //tesseract
-const aTesseract = new fourOb("aTesseract",hypercube_verts, hypercube_edges);
+const aTesseract = new fourOb("aTesseract",hypercube_verts, hypercube_edges,hypercube_verts);
 console.log(fourObs)
 ///////END 4D OBJECTS///////
 
@@ -165,7 +172,7 @@ fourObs.forEach(function(cur4Ob, indexA) {
     threeVerts.push(threeVert);
   });
 
-  new threeOb(cur4Ob.name, threeVerts, cur4Ob.verts);
+  new threeOb(cur4Ob.name, threeVerts, cur4Ob.edges);
 });
 }
 
@@ -273,11 +280,11 @@ var loopInterval = 10;
 var time = 0.0;
 
 setInterval(function() {
-  //time += 0.001;
+  time += 0.005;
 
   //apply 4d animation
   fourObs.forEach(function(cur4Ob, cur4ObIndex) {
-    //cur4Ob.rotationAnimation(time, 1,1,1,1,100);
+    cur4Ob.rotationAnimation(time, 493,10,1,1.6,0.5);
 
   });
   project();
@@ -296,16 +303,19 @@ lines=[];
  
 const lineMaterial = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 threeObs.forEach(function(cur3Ob, cur3ObIndex) {
-  var points = [];
+  
   (cur3Ob.edges).forEach(function(cur3edge, cur3VertIndex) {
 
-    var test = cur3edge;
+    var points = [];
+    var probe1 = cur3Ob.edges;
+    var probe2 = cur3Ob.verts[cur3edge[0]];
+    
     points.push( new THREE.Vector3( cur3Ob.verts[cur3edge[0]][0], cur3Ob.verts[cur3edge[0]][1], cur3Ob.verts[cur3edge[0]][2] ) );
     points.push( new THREE.Vector3( cur3Ob.verts[cur3edge[1]][0], cur3Ob.verts[cur3edge[1]][1], cur3Ob.verts[cur3edge[1]][2] ) );
     console.log(new THREE.Vector3( cur3Ob.verts[cur3edge[0]][0], cur3Ob.verts[cur3edge[0]][1], cur3Ob.verts[cur3edge[0]][2] ) );
 
     lines.push(null);
-  const geometry = new THREE.BufferGeometry().setFromPoints( points );
+  var geometry = new THREE.BufferGeometry().setFromPoints( points );
   lines[lines.length-1] = new THREE.Line( geometry, material );
   scene.add( lines[lines.length-1] );
   });
