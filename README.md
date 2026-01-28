@@ -1,16 +1,16 @@
 # simplified-4d-projection
 an express server and client for experimenting with 4d projection in three js
 
-SERVER SETUP
+server setup
 ====================
-GENERAL USE
+general use
 http://threejs.org/manual/#en/installation
 
-INSTALLING NODE.JS
+installing node.js
 https://nodejs.org/en/download
 
-INSTALLING EXPRESS
+installing express
 https://expressjs.com/en/starter/installing.html
 
-INSTALLING THREE.JS
+installing three.js
 https://www.tutorialspoint.com/threejs/threejs_installation.htm
